@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/ivan-tripplex/safety-lock/utils"
 )
 
 type User struct {
@@ -42,6 +44,10 @@ func main() {
 		fmt.Println("Tick at", time.Now())
 		if time.Now().Before(openTime) || time.Now().After(closeTime) {
 			fmt.Printf("User %s its time to sleep! Blocking access to the internet...\n", user.Name)
+			utils.BlockWebsites()
+			break
+		} else {
+			utils.UnblockWebsites()
 			break
 		}
 	}
